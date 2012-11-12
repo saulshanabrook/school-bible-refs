@@ -103,13 +103,20 @@ class Reference(object):
 refs = []
 for ref in yaml.load_all(yaml_file.read()):
     book = ref['bible'].get('book') or 'General'
+    source = ref['ref'].get('source')
+    if ' by ' in source:
+        sub_source = source[source.find(' by '):]
+        source = source[:source.find(' by ')]
+    else:
+        sub_source = ''
     r = Reference(
         book=book,
         passage=ref['bible'].get('passage'),
         quote=ref['bible'].get('quote'),
         expln=ref['bible'].get('expln'),
         text=ref['ref'].get('text'),
-        source=ref['ref'].get('source'),
+        source=source,
+        sub_source=sub_source,
         image=ref['ref'].get('image')
     )
     refs.append(r)

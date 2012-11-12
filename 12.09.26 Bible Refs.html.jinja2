@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Bible References</title>
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=2.00">
         <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
         <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
         <link href="http://twitter.github.com/bootstrap/assets/css/docs.css" rel="stylesheet">
@@ -17,6 +17,11 @@
         <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-affix.js"></script>
         <script src="http://twitter.github.com/bootstrap/assets/js/application.js"></script>
         <link href="http://twitter.github.com/bootstrap/assets/css/docs.css" rel="stylesheet">
+        <style type="text/css">
+            .bs-docs-sidebar li {
+                line-height: 12px;
+            }
+        </style>
     </head>
     <body data-spy="scroll" data-target=".bs-docs-sidebar">
         <!--[if lt IE 7]>
@@ -55,7 +60,7 @@
                         {% for ref in refs %}
                             {% if ref.book != book %}
                                 {% set book = ref.book %}
-                                <li><a href="#{{ ref.book|lower }}"><i class="icon-chevron-right"></i> {{ ref.book|title }}</a></li>
+                                <li><a href="#{{ ref.book|lower|replace(" ", "_") }}"><i class="icon-chevron-right"></i> {{ ref.book|title }}</a></li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -65,12 +70,12 @@
                     {% set book = 'init' %}
                     {% for ref in refs %}
                         {% if ref.book != book %}
-                            <section id="{{ ref.book|lower }}">
+                            <section id="{{ ref.book|lower|replace(" ", "_") }}">
                                 <div class="page-header">
                                     <h1>{{ ref.book|title }}</h1>
                                 </div>
                         {% endif %}
-                                <h3>{{ ref.source }}</h3>
+                                <h3>{{ ref.source }}<small>{{ ref.sub_source }}</small></h3>
                                 {% if ref.text %}<div class="well">{{ ref.text }}</div>{% endif %}
                                 {% if ref.image %}
                                     <ul class="thumbnails">
